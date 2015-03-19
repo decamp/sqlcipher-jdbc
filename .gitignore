@@ -1,0 +1,9 @@
+.*
+!.gitignore
+*~
+*.iml
+
+/scratch/
+/target/
+/ext/
+/ant
