@@ -6,10 +6,6 @@ SQLCipher is included here as a submodule. The only native binaries included her
 I've tried to keep modifications minimal, though, and it might not be difficult to get things to build for other
 platforms by fiddling with the makefiles.
 
-Also, this JDBC driver appears far from complete and may contain some bugs. I've tried to clean up some of
-the string escaping issues, but use at your own risk. I've used various versions of this driver for many years
-without significant issue.
-
 To create/open an encrypted database, try something like:
 ```
 Class.forName("org.sqlite.JDBC");
