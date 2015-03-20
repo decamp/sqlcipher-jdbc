@@ -2,15 +2,15 @@ Fork Notes
 ==================
 This is a fork of a [SQLite JDBC driver](https://bitbucket.org/xerial/sqlite-jdbc) that has been modified to work with
 [SQLCipher](https://www.zetetic.net/sqlcipher/), a version of SQLite modified to support encryption.
-QLCipher is included here as a submodule. Note that the only native binaries included here
-are currently for 64-bit OS X. But I've tried to keep modifications pretty low and it might not be too difficult to add
-build support for other platforms.
+SQLCipher is included here as a submodule. The only native binaries included here currently are for 64-bit OS X.
+I've tried to keep modifications minimal, though, and it might not be difficult to get things to build for other
+platforms by fiddling with the makefiles.
 
-Also note that this JDBC driver appears far from complete and may contain some bugs. I've tried to clean up some of
-the string escaping issues, but use at your own risk. I've used different versions of this particularly library for
-many years without significant issue.
+Also, this JDBC driver appears far from complete and may contain some bugs. I've tried to clean up some of
+the string escaping issues, but use at your own risk. I've used various versions of this driver for many years
+without significant issue.
 
-To use encryption features, try something like:
+To create/open an encrypted database, try something like:
 ```
 Class.forName("org.sqlite.JDBC");
 Properties props = new Properties();
