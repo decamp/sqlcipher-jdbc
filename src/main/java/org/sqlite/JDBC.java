@@ -16,12 +16,10 @@
 
 package org.sqlite;
 
-import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;
-import java.sql.DriverPropertyInfo;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Properties;
+import java.util.logging.Logger;
+
 
 public class JDBC implements Driver
 {
@@ -56,6 +54,11 @@ public class JDBC implements Driver
      */
     public boolean jdbcCompliant() {
         return false;
+    }
+
+    @Override
+    public Logger getParentLogger() throws SQLFeatureNotSupportedException {
+        throw new SQLFeatureNotSupportedException( "getParentLogger" );
     }
 
     /**

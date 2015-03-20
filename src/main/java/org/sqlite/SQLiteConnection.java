@@ -17,6 +17,7 @@ package org.sqlite;
 
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.concurrent.Executor;
 
 import org.sqlite.jdbc4.JDBC4Connection;
 
@@ -43,4 +44,32 @@ public class SQLiteConnection extends JDBC4Connection
     public SQLiteConnection(String url, String fileName, Properties prop) throws SQLException {
         super(url, fileName, prop);
     }
+
+    @Override
+    public void setSchema( String schema ) throws SQLException {
+        //TODO: Implement
+    }
+
+    @Override
+    public String getSchema() throws SQLException {
+        //TODO: Implement
+        return null;
+    }
+
+    @Override
+    public void abort( Executor executor ) throws SQLException {
+        //TODO: Implement
+    }
+
+    @Override
+    public void setNetworkTimeout( Executor executor, int milliseconds ) throws SQLException {
+        //TODO: Implement
+    }
+
+    @Override
+    public int getNetworkTimeout() throws SQLException {
+        //TODO: Implement
+        return 0;
+    }
+
 }

@@ -1,3 +1,13 @@
+Fork Notes
+==================
+This is a fork of a SQLite JDBC driver that has been modified to work with SQLCipher, a version of SQLite modified to
+support encrypted db files. SQLCipher is included here as a submodule. Note that the only native binaries included here
+are currently for 64-bit OS X.
+
+Also note that this JDBC driver is far from complete and contains some notable bugs. Input escaping is particularly lax,
+so use at your own risk, try not ot use too many quotes, and make sure you pre-sanitize any user input.
+
+
 SQLite JDBC Driver
 ==================
 SQLite JDBC, developed by [Taro L. Saito](http://www.xerial.org/leo), is a library for accessing and creating [SQLite](http://sqlite.org) database files in Java.

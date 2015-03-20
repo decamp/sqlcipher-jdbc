@@ -24,6 +24,8 @@
 //--------------------------------------
 package org.sqlite;
 
+import org.sqlite.core.StringEscaper;
+
 import java.sql.*;
 import java.util.*;
 
@@ -112,9 +114,7 @@ public class SQLiteConfig
         skip.add( Pragma.DATE_CLASS.pragmaName );
         skip.add( Pragma.DATE_STRING_FORMAT.pragmaName );
 
-
-        PreparedStatement ps1 = conn.prepareStatement("pragma ?");
-        PreparedStatement ps2 = conn.prepareStatement("pragma ?=?");
+        Statement st = conn.createStatement();
 
         try {
             for (Map.Entry<Object,Object> e: pragmaTable.entrySet()) {
@@ -124,25 +124,18 @@ public class SQLiteConfig
                 }
 
                 Object val = e.getValue();
-
                 if( val == null ) {
-                    ps1.setString( 1, key );
-                    ps1.execute();
+                    st.execute( String.format( "pragma %s", StringEscaper.escape( key ) ) );
                 } else {
-                    String str = formatVal( val );
-                    if( str != null ) {
-                        ps2.setString( 1, key );
-                        ps2.setString( 2, str );
-                    }
+                    st.execute( String.format( "pragma %s=%s",
+                                               StringEscaper.escape( key ),
+                                               StringEscaper.format( val ) ) );
                 }
             }
         }
         finally {
-            if( ps1 != null ) {
-                ps1.close();
-            }
-            if( ps2 != null ) {
-                ps2.close();
+            if( st != null ) {
+                st.close();
             }
         }
 
@@ -214,14 +207,14 @@ public class SQLiteConfig
      * @return The property object.
      */
     public Properties toProperties() {
-        Properties ret = new Properties( pragmaTable );
+        Properties ret = new Properties();
+        ret.putAll( pragmaTable );
         ret.setProperty(Pragma.OPEN_MODE.pragmaName, Integer.toString(openModeFlag));
         ret.setProperty(Pragma.TRANSACTION_MODE.pragmaName, transactionMode.getValue());
         ret.setProperty(Pragma.DATE_CLASS.pragmaName, dateClass.getValue());
         ret.setProperty(Pragma.DATE_PRECISION.pragmaName, datePrecision.getValue());
         ret.setProperty(Pragma.DATE_STRING_FORMAT.pragmaName, dateStringFormat);
-
-        return pragmaTable;
+        return ret;
     }
 
     /**
@@ -816,36 +809,6 @@ public class SQLiteConfig
      */
     public void setBusyTimeout(String milliseconds) {
         setPragma(Pragma.BUSY_TIMEOUT, milliseconds);
-    }
-
-
-    protected static String formatVal( Object val ) {
-        if( val instanceof String ) {
-            return (String)val;
-        }
-
-        if( val instanceof char[] ) {
-            return new String( (char[])val );
-        }
-
-        if( val instanceof byte[] ) {
-            byte[] bb = (byte[])val;
-            StringBuilder s = new StringBuilder( 64 + 5 );
-            s.append( "\"x'" );
-            for( int i = 0; i < 32; i++ ) {
-                s.append( toHex( bb[i] >>> 4 ) );
-                s.append( toHex( bb[i] & 0xF ) );
-            }
-            s.append( "'\"" );
-            return s.toString();
-        }
-
-        return null;
-    }
-
-
-    private static char toHex( int nibble ) {
-        return (char)( nibble < 10 ? '0' + nibble : 'A' + nibble - 10 );
     }
 
 }

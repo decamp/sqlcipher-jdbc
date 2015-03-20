@@ -78,7 +78,8 @@ SunOS-sparcv9_SQLITE_FLAGS  :=
 Mac-i386_CC        := gcc -arch $(OS_ARCH) 
 Mac-i386_STRIP     := strip -x
 Mac-i386_CFLAGS    := -I$(JAVA_HOME)/include -O2 -fPIC -mmacosx-version-min=10.4 -fvisibility=hidden
-Mac-i386_LINKFLAGS := -dynamiclib -static-libgcc
+Mac-i386_LINKFLAGS := -dynamiclib 
+#-static-libgcc
 Mac-i386_LIBNAME   := libsqlitejdbc.jnilib
 Mac-i386_SQLITE_FLAGS  := -DSQLITE_ENABLE_LOCKING_STYLE=0
 
@@ -89,7 +90,8 @@ ifeq ($(wildcard MAC_SDK),)
 	MAC_SDK := /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk
 endif
 Mac-x86_64_CFLAGS    := -I$(MAC_SDK)/System/Library/Frameworks/JavaVM.framework/Headers -O2 -fPIC -mmacosx-version-min=10.5 -fvisibility=hidden
-Mac-x86_64_LINKFLAGS := -dynamiclib -static-libgcc
+Mac-x86_64_LINKFLAGS := -dynamiclib -lcrypto
+#-static-libgcc
 Mac-x86_64_LIBNAME   := libsqlitejdbc.jnilib
 Mac-x86_64_SQLITE_FLAGS  := 
 
@@ -122,8 +124,11 @@ endif
 
 ifeq ($(OS_NAME),Windows)
     NATIVE32_DLL = win32
+    NATIVE64_DLL = win64
 else ifeq ($(OS_NAME),Linux)
     NATIVE32_DLL = linux32
+    NATIVE64_DLL = linux64
 else ifeq ($(OS_NAME),Mac)
     NATIVE32_DLL = mac32
+    NATIVE64_DLL = mac64
 endif

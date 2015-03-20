@@ -1,7 +1,6 @@
 package org.sqlite.jdbc4;
 
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 import org.sqlite.SQLiteConnection;
 import org.sqlite.jdbc3.JDBC3Statement;
@@ -34,6 +33,17 @@ public class JDBC4Statement extends JDBC3Statement implements Statement {
 
     public boolean isPoolable() throws SQLException {
         // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public void closeOnCompletion() throws SQLException {
+        // TODO: Implement
+    }
+
+    @Override
+    public boolean isCloseOnCompletion() throws SQLException {
+        // TODO: Implement
         return false;
     }
 }

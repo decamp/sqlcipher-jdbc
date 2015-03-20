@@ -321,7 +321,11 @@ JNIEXPORT jint JNICALL Java_org_sqlite_core_NativeDB_shared_1cache(
 JNIEXPORT jint JNICALL Java_org_sqlite_core_NativeDB_enable_1load_1extension(
         JNIEnv *env, jobject this, jboolean enable)
 {
-	return sqlite3_enable_load_extension(gethandle(env, this), enable ? 1 : 0);
+#ifndef SQLITE_OMIT_LOAD_EXTENSION
+    return sqlite3_enable_load_extension(gethandle(env, this), enable ? 1 : 0);
+#else
+    return 0;
+#endif
 }
 
 
