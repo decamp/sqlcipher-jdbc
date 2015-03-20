@@ -265,8 +265,15 @@ public class SQLiteJDBCLoader
      * @return The major version of the SQLite JDBC driver.
      */
     public static int getMajorVersion() {
-        String[] c = getVersion().split("\\.");
-        return (c.length > 0) ? Integer.parseInt(c[0]) : 1;
+        String[] c = getVersion().split( "\\." );
+        if( c.length == 0 ) {
+            return 0;
+        }
+        try {
+            return Integer.parseInt( c[0] );
+        } catch( NumberFormatException ex ) {
+            return 1;
+        }
     }
 
     /**
