@@ -28,7 +28,8 @@ public class EncryptedTest {
         String url = "jdbc:sqlite:" + tmp.getAbsolutePath();
 
         Properties props = new Properties();
-        props.put( "key", "saltydog" );
+        final String password = "salty'\"dog";
+        props.put( "key", password );
         Connection conn = DriverManager.getConnection( url, props );
         conn.setAutoCommit( false );
 
@@ -51,7 +52,7 @@ public class EncryptedTest {
         } catch( SQLException ignore ) {}
 
         conn.close();
-        props.put( "key", "saltydog" );
+        props.put( "key", password );
         conn = DriverManager.getConnection( url, props );
 
         st = conn.createStatement();

@@ -1,11 +1,35 @@
 Fork Notes
 ==================
-This is a fork of a SQLite JDBC driver that has been modified to work with SQLCipher, a version of SQLite modified to
-support encrypted db files. SQLCipher is included here as a submodule. Note that the only native binaries included here
-are currently for 64-bit OS X.
+This is a fork of a [SQLite JDBC driver](https://bitbucket.org/xerial/sqlite-jdbc) that has been modified to work with
+[SQLCipher](https://www.zetetic.net/sqlcipher/), a version of SQLite modified to support encryption.
+QLCipher is included here as a submodule. Note that the only native binaries included here
+are currently for 64-bit OS X. But I've tried to keep modifications pretty low and it might not be too difficult to add
+build support for other platforms.
 
-Also note that this JDBC driver is far from complete and contains some notable bugs. Input escaping is particularly lax,
-so use at your own risk, try not ot use too many quotes, and make sure you pre-sanitize any user input.
+Also note that this JDBC driver appears far from complete and may contain some bugs. I've tried to clean up some of
+the string escaping issues, but use at your own risk. I've used different versions of this particularly library for
+many years without significant issue.
+
+To use encryption features, try something like:
+```
+Class.forName("org.sqlite.JDBC");
+Properties props = new Properties();
+props.put( "key", "some_passphrase" )
+Connection conn = DriverManager.getConnection( url, props );
+```
+
+See SQLCipher documentation for the relevant pragmas that control encryption. These include:
+- key
+- cipher
+- kdf_iter
+- cipher_page_size
+- rekey
+- cipher_use_hmac
+- cipher_migrate
+- cipher_profile
+
+-decamp
+
 
 
 SQLite JDBC Driver
