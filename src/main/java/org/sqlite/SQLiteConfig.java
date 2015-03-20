@@ -442,10 +442,10 @@ public class SQLiteConfig
     }
 
     public static enum Encoding implements PragmaValue {
-        UTF8("'UTF-8'"),
-        UTF16("'UTF-16'"),
-        UTF16_LITTLE_ENDIAN("'UTF-16le'"),
-        UTF16_BIG_ENDIAN("'UTF-16be'"),
+        UTF8("UTF-8"),
+        UTF16("UTF-16"),
+        UTF16_LITTLE_ENDIAN("UTF-16le"),
+        UTF16_BIG_ENDIAN("UTF-16be"),
         UTF_8(UTF8),                    // UTF-8
         UTF_16(UTF16),                  // UTF-16
         UTF_16LE(UTF16_LITTLE_ENDIAN),  // UTF-16le
